@@ -19,3 +19,4 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy") and area.has_method("die"):
 		area.die()
 		queue_free()
+# 这是一个测试，用于冲突解决
