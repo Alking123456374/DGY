@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://cmmkagsg5jysf"]
+
+[ext_resource type="Texture2D" uid="uid://ddis1mwfk26aq" path="res://AssetBundle/Sprites/ForestBackground.png" id="1_xki6i"]
+[ext_resource type="PackedScene" uid="uid://cod7bei3k2tnm" path="res://Scence/Player.tscn" id="2_tfons"]
+[ext_resource type="PackedScene" uid="uid://b0nnhcb841nnx" path="res://Scence/Enemy.tscn" id="3_qtcyv"]
+[ext_resource type="Script" path="res://Scripts/game.gd" id="4_game"]
+[ext_resource type="AudioStream" uid="uid://e61od7j46nx0" path="res://AssetBundle/Audio/BGM.ogg" id="5_bgm"]
+[ext_resource type="AudioStream" uid="uid://drx03dhbpvaji" path="res://AssetBundle/Audio/EnemyDeath.mp3" id="6_edeath"]
+[ext_resource type="AudioStream" uid="uid://bklfp2ejj54p7" path="res://AssetBundle/Audio/GameOver.mp3" id="7_gameover"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_se8gc"]
+distance = -238.0
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("4_game")
+enemyScene = ExtResource("3_qtcyv")
+
+[node name="background 1" type="Sprite2D" parent="."]
+position = Vector2(-120, 1)
+texture = ExtResource("1_xki6i")
+metadata/_edit_lock_ = true
+
+[node name="background 2" type="Sprite2D" parent="."]
+position = Vector2(120, 2)
+texture = ExtResource("1_xki6i")
+metadata/_edit_lock_ = true
+
+[node name="MainCamera" type="Camera2D" parent="."]
+zoom = Vector2(2.4, 2.4)
+metadata/_edit_lock_ = true
+
+[node name="boundary" type="Node" parent="."]
+
+[node name="boundary_down" type="StaticBody2D" parent="boundary"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boundary/boundary_down"]
+position = Vector2(1, -104)
+shape = SubResource("WorldBoundaryShape2D_se8gc")
+
+[node name="boundary_left" type="StaticBody2D" parent="boundary"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="boundary/boundary_left"]
+position = Vector2(-5, 3)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_se8gc")
+
+[node name="boundary_right" type="StaticBody2D" parent="boundary"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="boundary/boundary_right"]
+position = Vector2(3, 11)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_se8gc")
+
+[node name="boundary_up" type="StaticBody2D" parent="boundary"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="boundary/boundary_up"]
+position = Vector2(-3, 259)
+rotation = -3.14159
+shape = SubResource("WorldBoundaryShape2D_se8gc")
+
+[node name="Player" parent="." instance=ExtResource("2_tfons")]
+position = Vector2(-45, 33)
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_bgm")
+volume_db = -12.0
+
+[node name="EnemyDeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_edeath")
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_gameover")
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 460.0
+offset_bottom = 76.0
+theme_override_font_sizes/font_size = 40
+text = "Score: 0"
+
+[node name="GameOverPanel" type="Control" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UI/GameOverPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="UI/GameOverPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UI/GameOverPanel/Center"]
+theme_override_constants/separation = 24
+
+[node name="GameOverLabel" type="Label" parent="UI/GameOverPanel/Center/VBox"]
+theme_override_font_sizes/font_size = 96
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="FinalScore" type="Label" parent="UI/GameOverPanel/Center/VBox"]
+theme_override_font_sizes/font_size = 48
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="UI/GameOverPanel/Center/VBox"]
+theme_override_font_sizes/font_size = 32
+text = "Restarting..."
+horizontal_alignment = 1

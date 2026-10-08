@@ -1,0 +1,142 @@
+[gd_scene load_steps=21 format=3 uid="uid://b0nnhcb841nnx"]
+
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_x0wvk"]
+[ext_resource type="Texture2D" uid="uid://feds7aev55qp" path="res://AssetBundle/Sprites/Slimer.png" id="2_8d4d7"]
+[ext_resource type="Texture2D" uid="uid://ch4wd5mlitw4w" path="res://AssetBundle/Sprites/SlimerDeath.png" id="3_death"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jch5k"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(0, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vre3c"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(41, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il2ym"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(82, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxu8d"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(123, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcwe5"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(164, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rgqt"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(205, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7kmx"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(246, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no1n1"]
+atlas = ExtResource("2_8d4d7")
+region = Rect2(287, 0, 41, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1"]
+atlas = ExtResource("3_death")
+region = Rect2(0, 0, 64, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2"]
+atlas = ExtResource("3_death")
+region = Rect2(64, 0, 64, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3"]
+atlas = ExtResource("3_death")
+region = Rect2(128, 0, 64, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4"]
+atlas = ExtResource("3_death")
+region = Rect2(192, 0, 64, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5"]
+atlas = ExtResource("3_death")
+region = Rect2(256, 0, 64, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6"]
+atlas = ExtResource("3_death")
+region = Rect2(320, 0, 64, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7"]
+atlas = ExtResource("3_death")
+region = Rect2(384, 0, 64, 58)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p1sof"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jch5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vre3c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il2ym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxu8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcwe5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rgqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7kmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no1n1")
+}],
+"loop": true,
+"name": &"enemy_walk",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7")
+}],
+"loop": false,
+"name": &"die",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btfw1"]
+size = Vector2(25, 20)
+
+[node name="slime" type="Area2D"]
+script = ExtResource("1_x0wvk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, 0)
+sprite_frames = SubResource("SpriteFrames_p1sof")
+animation = &"enemy_walk"
+autoplay = "enemy_walk"
+frame_progress = 0.73458
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 9)
+shape = SubResource("RectangleShape2D_btfw1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
