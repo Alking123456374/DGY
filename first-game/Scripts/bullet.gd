@@ -20,3 +20,4 @@ func _on_area_entered(area: Area2D) -> void:
 		area.die()
 		queue_free()
 # 哈哈哈哈啊哈哈哈
+
